@@ -1,0 +1,515 @@
+# brief note about quotes (from http://yaml.org/spec/1.2/spec.html#id2802346)
+# Strings should contain no quotes, unless necessary. The default is double quotes
+# unless a single quote is necessary to deal with special characters
+#
+openapi: 3.0.0
+info:
+  description: This is the REST contract for the Order System
+  version: 1.0.0
+  title: (20F) Group Project - Order System
+  contact:
+    name: (20F) CST 8277
+    email: normanm@algonquincollege.com
+    url: https://brightspace.algonquincollege.com/d2l/home/279461
+servers:
+  - url: http://localhost:{port}/{contextRoot}/{basePath}
+    variables:
+      port:
+        default: "8080"
+      contextRoot:
+        default: rest-orderSystem
+      basePath:
+        default: api/v1
+security:
+  - basicAuth: []
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  parameters:
+    idPathParam:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        description: a resource's id
+        example: 1
+    id2PathParam:
+      in: path
+      name: id2
+      required: true
+      schema:
+        type: integer
+        format: int64
+        description: a resource's id
+        example: 1
+  responses:
+    ForbiddenError:
+      description: Access to the specified resource has been forbidden
+    UnauthorizedAdminError:
+      description: request requires HTTP authentication for ADMIN_ROLE
+    UnauthorizedUserError:
+      description: request requires HTTP authentication for USER_ROLE
+    NotFound:
+      description: The specified resource was not found
+  schemas:
+    PojoBase:
+      type: object
+      required:
+        - id
+        - version
+      properties:
+        id:
+          description: id of entity
+          type: integer
+        version:
+          description: version (OptLock) of entity
+          type: integer
+        createdDate:
+          description: creation timestamp of entity
+          type: string
+          format: date-time
+        updatedDate:
+          description: last-updatd timestamp of entity
+          type: string
+          format: date-time
+    Customer:
+      description: (20F) Group Project - Customer entity
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PojoBase"
+      properties:
+        firstName:
+          type: string
+          description: First Name of the Customer
+          example: John
+        lastName:
+          type: string
+          description: Last Name of the Customer
+          example: Doe
+        email:
+          type: string
+          description: Email of the Customer
+          example: John.Doe@gmail.com
+        phoneNumber:
+          type: string
+          description: Phone number of the Customer
+          example: +1.613.555.1212
+        billingAddress:
+          $ref: "#/components/schemas/BillingAddress"
+        shippingAddress:
+          $ref: "#/components/schemas/ShippingAddress"
+    CustomersList:
+      description: list of Customer
+      type: array
+      items:
+        $ref: "#/components/schemas/Customer"
+    Address:
+      description: (20W) Group Project - Address entity
+      discriminator:
+        propertyName: type
+      required:
+        - type
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PojoBase"
+      properties:
+        type:
+          type: string
+          description: type of Address
+          example: B for BillingAddress
+        street:
+          type: string
+          description: Location of Address (street)
+          example: 1385 Woodroffe Avenue
+        city:
+          type: string
+          description: Location of Address (city)
+          example: Ottawa
+        state:
+          type: string
+          description: Location of Address (State/Province)
+          example: ON
+        country:
+          type: string
+          description: Location of Address (country)
+          example: Canada
+        postal:
+          type: string
+          description: Postal Code
+          example: K2G 1V8
+    BillingAddress:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Address"
+      properties:
+        alsoShipping:
+          type: boolean
+          description: indicates that this BillingAddress is also the Customer's ShippingAddress
+        type:
+          type: string
+          description: address type
+          example: B
+    ShippingAddress:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Address"
+      properties:
+        type:
+          type: string
+          description: address type
+          example: S
+    Order:
+      description: (20F) Group Project - Order entity
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PojoBase"
+      properties:
+        description:
+          type: string
+          description: Description of the order
+          example: Long Shirt
+        owningCustomer:
+          $ref: "#/components/schemas/Customer"
+        orderLines:
+          $ref: "#/components/schemas/OrderLinesList"
+    OrderList:
+      description: list of orders
+      type: array
+      items:
+        $ref: "#/components/schemas/Order"
+    OrderLine:
+      description: (20F) Group Project - OrderLine entity
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PojoBase"
+      properties:
+        orderLineNo:
+          type: number
+          description: OrderLine number
+          example: 2
+        amount:
+          type: number
+          description: amount of the related Product
+          example: 1.5
+        price:
+          type: number
+          description: price of the related Product
+          example: 123.45
+        product:
+          $ref: "#/components/schemas/Product"
+    OrderLinesList:
+      description: list of OrderLines
+      type: array
+      items:
+        $ref: "#/components/schemas/OrderLine"
+    Product:
+      description: (20F) Group Project - Product entity
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PojoBase"
+      properties:
+        description:
+          type: string
+          description: Description of the product
+          example: Shirt
+        serialNo:
+          type: string
+          description: serialNo of the product
+          example: Abc123
+    ProductsList:
+      description: list of products
+      type: array
+      items:
+        $ref: "#/components/schemas/Product"
+    Store:
+      description: (20F) Group Project - Store entity
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/PojoBase"
+      properties:
+        storeName:
+          type: string
+          description: Store Name
+          example: Hudson Bay
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+    StoresList:
+      description: list of stores
+      type: array
+      items:
+        $ref: "#/components/schemas/Store"
+paths:
+  /customer:
+    get:
+      summary: Retrieves the list of Customers
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomersList"
+        401:
+          $ref: "#/components/responses/UnauthorizedAdminError"
+    post:
+      summary: Adds a new Customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomersList"
+        401:
+          $ref: "#/components/responses/UnauthorizedAdminError"
+
+  /customer/{id}:
+    get:
+      summary: Retrieves the specified Customer (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        401:
+          $ref: "#/components/responses/UnauthorizedUserError"
+        403:
+          $ref: "#/components/responses/ForbiddenError"
+        404:
+          $ref: "#/components/responses/NotFound"
+    delete:
+      summary: Removes the specified Customer (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      responses:
+        204:
+          description: Ok (successful operation, no content)
+        401:
+          $ref: "#/components/responses/UnauthorizedUserError"
+        403:
+          $ref: "#/components/responses/ForbiddenError"
+        404:
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Update the specified Customer (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomersList"
+
+  /customer/{id}/orders:
+    get:
+      summary: Retrieve the list of Orders for the specified Customer (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderList"
+        401:
+          $ref: "#/components/responses/UnauthorizedAdminError"
+    post:
+      summary: Add a new Order for the specified Customer (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderList"
+
+  /customer/{id}/orders/{id2}:
+    get:
+      summary: Retrieve the specific Order (by id2) for the specified Customer (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+        - $ref: "#/components/parameters/id2PathParam"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        401:
+          $ref: "#/components/responses/UnauthorizedAdminError"
+
+  /product:
+    get:
+      summary: Retrieves all Products
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductsList"
+        401:
+          $ref: "#/components/responses/UnauthorizedAdminError"
+    post:
+      summary: Add a new Product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductsList"
+
+  /product/{id}:
+    get:
+      summary: Retrieves the specified Product (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        401:
+          $ref: "#/components/responses/UnauthorizedUserError"
+        403:
+          $ref: "#/components/responses/ForbiddenError"
+        404:
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Update the specified Product (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductsList"
+
+  /store:
+    get:
+      summary: Retrieves all Stores
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoresList"
+        401:
+          $ref: "#/components/responses/UnauthorizedAdminError"
+    post:
+      summary: Add a new Store
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoresList"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoresList"
+
+  /store/{id}:
+    get:
+      summary: Retrieves the specified Store (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Store"
+        401:
+          $ref: "#/components/responses/UnauthorizedUserError"
+        403:
+          $ref: "#/components/responses/ForbiddenError"
+        404:
+          $ref: "#/components/responses/NotFound"
+    delete:
+      summary: Removes the specified Store (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      responses:
+        204:
+          description: Ok (successful operation, no content)
+        401:
+          $ref: "#/components/responses/UnauthorizedUserError"
+        403:
+          $ref: "#/components/responses/ForbiddenError"
+        404:
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Updates the specified Store (by id)
+      parameters:
+        - $ref: "#/components/parameters/idPathParam"
+      requestBody:
+        description: update store to Db
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Store"
+      responses:
+        200:
+          description: Ok (Successful operation)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoresList"

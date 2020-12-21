@@ -1,0 +1,65 @@
+{
+	"folders": {},
+	"connections": {
+		"h2_server-17533058b13-6d03d68d789b9b87": {
+			"provider": "generic",
+			"driver": "h2_server",
+			"name": "H2 - 20fGroupProject",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "12345",
+				"database": "~/20fGroupProject",
+				"url": "jdbc:h2:tcp://localhost:12345/~/20fGroupProject",
+				"type": "test",
+				"auth-model": "native"
+			}
+		},
+		"h2_server-176535032af-3848642ab826d3de": {
+			"provider": "generic",
+			"driver": "h2_server",
+			"name": "H2 - BridgeServer",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "12345",
+				"database": "~/20fGroupProject",
+				"url": "jdbc:h2:tcp://localhost:12345/~/20fGroupProject",
+				"type": "test",
+				"auth-model": "native"
+			}
+		}
+	},
+	"virtual-models": {
+		"h2_server-17533058b13-6d03d68d789b9b87": {
+			"PUBLIC": {
+				"@properties": {
+					"erd.diagram.state": {
+						"serialized": "<diagram version=\"1\" name=\"PUBLIC\" time=\"202011300950\"><entities><data-source id=\"h2_server-17533058b13-6d03d68d789b9b87\"><entity id=\"1\" name=\"CUSTOMER\" fq-name=\"PUBLIC.CUSTOMER\" order=\"0\" font=\".AppleSystemUIFont:14:0\" x=\"35\" y=\"8\"><path name=\"PUBLIC\"/></entity><entity id=\"2\" name=\"CUST_ADDR\" fq-name=\"PUBLIC.CUST_ADDR\" order=\"1\" font=\".AppleSystemUIFont:14:0\" x=\"266\" y=\"164\"><path name=\"PUBLIC\"/></entity><entity id=\"3\" name=\"ORDERLINE\" fq-name=\"PUBLIC.ORDERLINE\" order=\"2\" font=\".AppleSystemUIFont:14:0\" x=\"748\" y=\"75\"><path name=\"PUBLIC\"/></entity><entity id=\"4\" name=\"ORDER_TBL\" fq-name=\"PUBLIC.ORDER_TBL\" order=\"3\" font=\".AppleSystemUIFont:14:0\" x=\"419\" y=\"51\"><path name=\"PUBLIC\"/></entity><entity id=\"5\" name=\"PRODUCT\" fq-name=\"PUBLIC.PRODUCT\" order=\"4\" font=\".AppleSystemUIFont:14:0\" x=\"583\" y=\"233\"><path name=\"PUBLIC\"/></entity><entity id=\"6\" name=\"SECURITY_ROLE\" fq-name=\"PUBLIC.SECURITY_ROLE\" order=\"5\" font=\".AppleSystemUIFont:14:0\" x=\"404\" y=\"436\"><path name=\"PUBLIC\"/></entity><entity id=\"7\" name=\"SECURITY_USER\" fq-name=\"PUBLIC.SECURITY_USER\" order=\"6\" font=\".AppleSystemUIFont:14:0\" x=\"25\" y=\"416\"><path name=\"PUBLIC\"/></entity><entity id=\"8\" name=\"SECURITY_USER_SECURITY_ROLE\" fq-name=\"PUBLIC.SECURITY_USER_SECURITY_ROLE\" order=\"7\" color-bg=\"255,146,0\" font=\".AppleSystemUIFont:14:0\" x=\"191\" y=\"547\"><path name=\"PUBLIC\"/></entity><entity id=\"9\" name=\"STORES\" fq-name=\"PUBLIC.STORES\" order=\"8\" font=\".AppleSystemUIFont:14:0\" x=\"932\" y=\"205\"><path name=\"PUBLIC\"/></entity><entity id=\"10\" name=\"STORES_PRODUCTS\" fq-name=\"PUBLIC.STORES_PRODUCTS\" order=\"9\" color-bg=\"255,146,0\" border-width=\"3\" font=\".AppleSystemUIFont:14:0\" x=\"770\" y=\"360\"><path name=\"PUBLIC\"/></entity></data-source></entities><relations><relation name=\"FK_ORDER_TBL_OWNING_CUST_ID\" fq-name=\"PUBLIC.ORDER_TBL.FK_ORDER_TBL_OWNING_CUST_ID\" type=\"fk\" pk-ref=\"1\" fk-ref=\"4\"/><relation name=\"FK_SECURITY_USER_CUST_ID\" fq-name=\"PUBLIC.SECURITY_USER.FK_SECURITY_USER_CUST_ID\" type=\"fk\" pk-ref=\"1\" fk-ref=\"7\"/><relation name=\"FK_CUSTOMER_BILLING_ADDR\" fq-name=\"PUBLIC.CUSTOMER.FK_CUSTOMER_BILLING_ADDR\" type=\"fk\" pk-ref=\"2\" fk-ref=\"1\"/><relation name=\"FK_CUSTOMER_SHIPPING_ADDR\" fq-name=\"PUBLIC.CUSTOMER.FK_CUSTOMER_SHIPPING_ADDR\" type=\"fk\" pk-ref=\"2\" fk-ref=\"1\"/><relation name=\"FK_ORDERLINE_OWNING_ORDER_ID\" fq-name=\"PUBLIC.ORDERLINE.FK_ORDERLINE_OWNING_ORDER_ID\" type=\"fk\" pk-ref=\"4\" fk-ref=\"3\"/><relation name=\"FK_ORDERLINE_PRODUCT_ID\" fq-name=\"PUBLIC.ORDERLINE.FK_ORDERLINE_PRODUCT_ID\" type=\"fk\" pk-ref=\"5\" fk-ref=\"3\"/><relation name=\"FK_STORES_PRODUCTS_PRODUCT_ID\" fq-name=\"PUBLIC.STORES_PRODUCTS.FK_STORES_PRODUCTS_PRODUCT_ID\" type=\"fk\" pk-ref=\"5\" fk-ref=\"10\"/><relation name=\"FK_SECURITY_USER_SECURITY_ROLE_ROLE_ID\" fq-name=\"PUBLIC.SECURITY_USER_SECURITY_ROLE.FK_SECURITY_USER_SECURITY_ROLE_ROLE_ID\" type=\"fk\" pk-ref=\"6\" fk-ref=\"8\"/><relation name=\"FK_SECURITY_USER_SECURITY_ROLE_USER_ID\" fq-name=\"PUBLIC.SECURITY_USER_SECURITY_ROLE.FK_SECURITY_USER_SECURITY_ROLE_USER_ID\" type=\"fk\" pk-ref=\"7\" fk-ref=\"8\"/><relation name=\"FK_STORES_PRODUCTS_STORE_ID\" fq-name=\"PUBLIC.STORES_PRODUCTS.FK_STORES_PRODUCTS_STORE_ID\" type=\"fk\" pk-ref=\"9\" fk-ref=\"10\"/></relations></diagram>"
+					}
+				}
+			}
+		},
+		"h2_server-176535032af-3848642ab826d3de": {
+			"PUBLIC": {
+				"@properties": {
+					"erd.diagram.state": {
+						"serialized": "<diagram version=\"1\" name=\"PUBLIC\" time=\"202011300950\"><entities><data-source id=\"h2_server-17533058b13-6d03d68d789b9b87\"><entity id=\"1\" name=\"CUSTOMER\" fq-name=\"PUBLIC.CUSTOMER\" order=\"0\" font=\".AppleSystemUIFont:14:0\" x=\"35\" y=\"8\"><path name=\"PUBLIC\"/></entity><entity id=\"2\" name=\"CUST_ADDR\" fq-name=\"PUBLIC.CUST_ADDR\" order=\"1\" font=\".AppleSystemUIFont:14:0\" x=\"266\" y=\"164\"><path name=\"PUBLIC\"/></entity><entity id=\"3\" name=\"ORDERLINE\" fq-name=\"PUBLIC.ORDERLINE\" order=\"2\" font=\".AppleSystemUIFont:14:0\" x=\"748\" y=\"75\"><path name=\"PUBLIC\"/></entity><entity id=\"4\" name=\"ORDER_TBL\" fq-name=\"PUBLIC.ORDER_TBL\" order=\"3\" font=\".AppleSystemUIFont:14:0\" x=\"419\" y=\"51\"><path name=\"PUBLIC\"/></entity><entity id=\"5\" name=\"PRODUCT\" fq-name=\"PUBLIC.PRODUCT\" order=\"4\" font=\".AppleSystemUIFont:14:0\" x=\"583\" y=\"233\"><path name=\"PUBLIC\"/></entity><entity id=\"6\" name=\"SECURITY_ROLE\" fq-name=\"PUBLIC.SECURITY_ROLE\" order=\"5\" font=\".AppleSystemUIFont:14:0\" x=\"404\" y=\"436\"><path name=\"PUBLIC\"/></entity><entity id=\"7\" name=\"SECURITY_USER\" fq-name=\"PUBLIC.SECURITY_USER\" order=\"6\" font=\".AppleSystemUIFont:14:0\" x=\"25\" y=\"416\"><path name=\"PUBLIC\"/></entity><entity id=\"8\" name=\"SECURITY_USER_SECURITY_ROLE\" fq-name=\"PUBLIC.SECURITY_USER_SECURITY_ROLE\" order=\"7\" color-bg=\"255,146,0\" font=\".AppleSystemUIFont:14:0\" x=\"191\" y=\"547\"><path name=\"PUBLIC\"/></entity><entity id=\"9\" name=\"STORES\" fq-name=\"PUBLIC.STORES\" order=\"8\" font=\".AppleSystemUIFont:14:0\" x=\"932\" y=\"205\"><path name=\"PUBLIC\"/></entity><entity id=\"10\" name=\"STORES_PRODUCTS\" fq-name=\"PUBLIC.STORES_PRODUCTS\" order=\"9\" color-bg=\"255,146,0\" border-width=\"3\" font=\".AppleSystemUIFont:14:0\" x=\"770\" y=\"360\"><path name=\"PUBLIC\"/></entity></data-source></entities><relations><relation name=\"FK_ORDER_TBL_OWNING_CUST_ID\" fq-name=\"PUBLIC.ORDER_TBL.FK_ORDER_TBL_OWNING_CUST_ID\" type=\"fk\" pk-ref=\"1\" fk-ref=\"4\"/><relation name=\"FK_SECURITY_USER_CUST_ID\" fq-name=\"PUBLIC.SECURITY_USER.FK_SECURITY_USER_CUST_ID\" type=\"fk\" pk-ref=\"1\" fk-ref=\"7\"/><relation name=\"FK_CUSTOMER_BILLING_ADDR\" fq-name=\"PUBLIC.CUSTOMER.FK_CUSTOMER_BILLING_ADDR\" type=\"fk\" pk-ref=\"2\" fk-ref=\"1\"/><relation name=\"FK_CUSTOMER_SHIPPING_ADDR\" fq-name=\"PUBLIC.CUSTOMER.FK_CUSTOMER_SHIPPING_ADDR\" type=\"fk\" pk-ref=\"2\" fk-ref=\"1\"/><relation name=\"FK_ORDERLINE_OWNING_ORDER_ID\" fq-name=\"PUBLIC.ORDERLINE.FK_ORDERLINE_OWNING_ORDER_ID\" type=\"fk\" pk-ref=\"4\" fk-ref=\"3\"/><relation name=\"FK_ORDERLINE_PRODUCT_ID\" fq-name=\"PUBLIC.ORDERLINE.FK_ORDERLINE_PRODUCT_ID\" type=\"fk\" pk-ref=\"5\" fk-ref=\"3\"/><relation name=\"FK_STORES_PRODUCTS_PRODUCT_ID\" fq-name=\"PUBLIC.STORES_PRODUCTS.FK_STORES_PRODUCTS_PRODUCT_ID\" type=\"fk\" pk-ref=\"5\" fk-ref=\"10\"/><relation name=\"FK_SECURITY_USER_SECURITY_ROLE_ROLE_ID\" fq-name=\"PUBLIC.SECURITY_USER_SECURITY_ROLE.FK_SECURITY_USER_SECURITY_ROLE_ROLE_ID\" type=\"fk\" pk-ref=\"6\" fk-ref=\"8\"/><relation name=\"FK_SECURITY_USER_SECURITY_ROLE_USER_ID\" fq-name=\"PUBLIC.SECURITY_USER_SECURITY_ROLE.FK_SECURITY_USER_SECURITY_ROLE_USER_ID\" type=\"fk\" pk-ref=\"7\" fk-ref=\"8\"/><relation name=\"FK_STORES_PRODUCTS_STORE_ID\" fq-name=\"PUBLIC.STORES_PRODUCTS.FK_STORES_PRODUCTS_STORE_ID\" type=\"fk\" pk-ref=\"9\" fk-ref=\"10\"/></relations></diagram>"
+					}
+				}
+			}
+		}
+	},
+	"connection-types": {
+		"test": {
+			"name": "Test",
+			"color": "org.jkiss.dbeaver.color.connectionType.qa.background",
+			"description": "Test (QA) database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": true
+		}
+	}
+}
